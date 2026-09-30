@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="620" viewBox="0 0 1440 620" role="img" aria-labelledby="title desc">
+  <title id="title">KH III: Epic a Steam</title>
+  <desc id="desc">Portada original para el asistente local de conversión de guardados. Muestra dos tarjetas de archivo y una flecha sobre un fondo azul noche y violeta.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101827"/><stop offset=".55" stop-color="#171b35"/><stop offset="1" stop-color="#242040"/></linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4a868"/><stop offset="1" stop-color="#f16c85"/></linearGradient>
+    <linearGradient id="steam" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a6caff"/><stop offset="1" stop-color="#7386f1"/></linearGradient>
+    <radialGradient id="halo"><stop stop-color="#8b72dc" stop-opacity=".24"/><stop offset="1" stop-color="#8b72dc" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-.3" y="-.3" width="1.6" height="1.8"><feDropShadow dx="0" dy="20" stdDeviation="22" flood-color="#050813" flood-opacity=".45"/></filter>
+    <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#e0deff" opacity=".18"/></pattern>
+  </defs>
+  <rect width="1440" height="620" rx="32" fill="url(#bg)"/>
+  <rect width="1440" height="620" rx="32" fill="url(#dots)"/>
+  <circle cx="1120" cy="305" r="390" fill="url(#halo)"/>
+  <path d="M0 510c180-90 285-72 440-10s293 54 425-8 320-118 575-9v137H0z" fill="#0b1220" opacity=".48"/>
+  <g font-family="Inter,Segoe UI,Arial,sans-serif">
+    <rect x="92" y="78" width="294" height="42" rx="21" fill="#ffffff" fill-opacity=".075" stroke="#ffffff" stroke-opacity=".13"/>
+    <circle cx="116" cy="99" r="5" fill="#79d7bd"/>
+    <text x="134" y="105" fill="#d7d7e7" font-size="15" font-weight="700" letter-spacing="2">ASISTENTE LOCAL · WINDOWS</text>
+    <text x="92" y="222" fill="#fbf9ff" font-size="70" font-weight="760" letter-spacing="-2">KH III</text>
+    <text x="92" y="295" fill="#f5f2ff" font-size="43" font-weight="650" letter-spacing="-1">Epic <tspan fill="#f0a266">→</tspan> Steam</text>
+    <text x="96" y="350" fill="#b9bfd1" font-size="22">Transfiere tus guardados con revisión y respaldo</text>
+    <text x="96" y="384" fill="#b9bfd1" font-size="22">en tu propia computadora.</text>
+    <g transform="translate(96 446)">
+      <rect width="169" height="43" rx="21.5" fill="#f3a56b" fill-opacity=".13" stroke="#f3a56b" stroke-opacity=".4"/>
+      <text x="84.5" y="27" fill="#ffd3ae" font-size="14" font-weight="700" text-anchor="middle" letter-spacing="1">SIN NUBE</text>
+      <rect x="181" width="208" height="43" rx="21.5" fill="#ffffff" fill-opacity=".055" stroke="#ffffff" stroke-opacity=".16"/>
+      <text x="285" y="27" fill="#d9dcec" font-size="14" font-weight="700" text-anchor="middle" letter-spacing="1">COPIA DE SEGURIDAD</text>
+    </g>
+  </g>
+  <g filter="url(#shadow)" transform="translate(758 111) rotate(-7 150 190)">
+    <rect width="268" height="342" rx="24" fill="#202a3b" stroke="#f1a46c" stroke-opacity=".72" stroke-width="2"/>
+    <rect x="22" y="22" width="224" height="122" rx="16" fill="#f0a168" fill-opacity=".12"/>
+    <path d="M74 103V63a10 10 0 0 1 10-10h36l14 15h49a10 10 0 0 1 10 10v25a10 10 0 0 1-10 10H84a10 10 0 0 1-10-10z" fill="none" stroke="#f6b17d" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="215" cy="52" r="5" fill="#f6b17d"/>
+    <g font-family="Inter,Segoe UI,Arial,sans-serif">
+      <text x="24" y="188" fill="#ffd5b6" font-size="14" font-weight="700" letter-spacing="1.8">ORIGEN</text>
+      <text x="24" y="224" fill="#fff8f2" font-size="22" font-weight="700">Epic Games</text>
+      <text x="24" y="256" fill="#aeb8cb" font-size="14">KHIII_slot1.bin</text>
+      <path d="M24 283h220" stroke="#ffffff" stroke-opacity=".1"/>
+      <circle cx="31" cy="312" r="5" fill="#78d6bc"/>
+      <text x="45" y="317" fill="#cbd6df" font-size="13">Archivo revisado</text>
+    </g>
+  </g>
+  <g transform="translate(1036 258)">
+    <circle cx="0" cy="0" r="39" fill="#ffffff" fill-opacity=".06" stroke="#ffffff" stroke-opacity=".18"/>
+    <path d="M-15 0h28m0 0-10-10m10 10L3 10" fill="none" stroke="url(#glow)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g filter="url(#shadow)" transform="translate(1088 138) rotate(6 132 171)">
+    <rect width="268" height="342" rx="24" fill="#20263d" stroke="#94aaff" stroke-opacity=".76" stroke-width="2"/>
+    <rect x="22" y="22" width="224" height="122" rx="16" fill="#8496fa" fill-opacity=".12"/>
+    <circle cx="134" cy="83" r="35" fill="none" stroke="#a8bbff" stroke-width="4"/>
+    <path d="M105 82h19l9-11 14 23h16m-29-20v17" fill="none" stroke="#a8bbff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <g font-family="Inter,Segoe UI,Arial,sans-serif">
+      <text x="24" y="188" fill="#bdc9ff" font-size="14" font-weight="700" letter-spacing="1.8">DESTINO</text>
+      <text x="24" y="224" fill="#f6f7ff" font-size="22" font-weight="700">Steam</text>
+      <text x="24" y="256" fill="#aeb8cb" font-size="14">Mismo espacio de guardado</text>
+      <path d="M24 283h220" stroke="#ffffff" stroke-opacity=".1"/>
+      <circle cx="31" cy="312" r="5" fill="#78d6bc"/>
+      <text x="45" y="317" fill="#cbd6df" font-size="13">Respaldo antes de instalar</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,35 @@
+{
+  "//": [
+    "Type-checks the page's own JavaScript without changing a byte of it.",
+    "",
+    "allowJs + checkJs is the whole point: the assets stay plain ES",
+    "modules that the browser loads directly, and this reads them where they",
+    "sit. There is no emit, no bundle and no output directory, so nothing",
+    "here can end up in the binary.",
+    "",
+    "The assets are ES modules, so the checker follows the imports. That makes",
+    "a name used but never imported an error, and an import nothing uses one",
+    "too, neither of which was visible back when every file shared a single",
+    "global scope.",
+    "",
+    "strict is off. These are DOM builders written against a browser, not a",
+    "typed codebase, and turning it on would mean annotating every closure to",
+    "buy warnings about nulls that the page already handles. What is on is the",
+    "part that pays: undefined names, misspelled properties, wrong argument",
+    "counts and calls into things that are not functions."
+  ],
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "target": "ES2020",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "strict": false,
+    "noImplicitAny": false,
+    "noUnusedLocals": true,
+    "types": []
+  },
+  "include": ["../../internal/gui/assets/*.js"]
+}

@@ -1,0 +1,57 @@
+name: Reportar un problema
+description: Describe un error sin compartir guardados ni datos de cuenta.
+title: "[Error]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **No adjuntes guardados, copias de seguridad, volcados, SteamID64, contraseñas, cookies ni credenciales.** Usa solo archivos sintéticos para reproducir un problema.
+  - type: input
+    id: version
+    attributes:
+      label: Versión o commit
+      description: Indica la versión de la Release o el identificador del commit.
+      placeholder: v0.1.0 o abc1234
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Sistema operativo
+      placeholder: Windows 11
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Paso donde ocurre
+      options:
+        - Iniciar la herramienta
+        - Elegir archivos de Epic
+        - Elegir carpeta de Steam
+        - Revisar los archivos
+        - Preparar la conversión
+        - Instalar los archivos
+        - Otro
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Qué esperabas que ocurriera
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Qué ocurrió
+      description: Copia el mensaje de error exacto. Elimina rutas personales e identificadores antes de enviar.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Pasos para reproducirlo
+      description: No cargues archivos de guardado ni datos personales en GitHub.
+    validations:
+      required: true

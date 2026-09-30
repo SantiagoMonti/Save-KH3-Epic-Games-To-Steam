@@ -1,0 +1,141 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  go:
+    name: go / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7
+        with:
+          go-version: '1.26'
+          cache: false
+
+      - name: gofmt
+        shell: bash
+        run: |
+          unformatted=$(gofmt -l cmd internal)
+          if [ -n "$unformatted" ]; then
+            echo "these files need gofmt:"; echo "$unformatted"; exit 1
+          fi
+
+      - name: vet
+        run: go vet ./...
+
+      - name: test
+        run: go test ./... -count=1
+
+      - name: race
+        if: matrix.os == 'ubuntu-latest'
+        run: go test ./... -race -count=1
+
+
+
+  docker:
+    name: container
+    # The image has failure modes the Go tests cannot reach: a mount that no
+    # longer carries the account id, a read-only root that turns out to be too
+    # little, a published port the UI's own Host check refuses. So CI builds
+    # the real image and drives it.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7
+        with:
+          go-version: '1.26'
+          cache: false
+
+      - name: build a synthetic save tree
+        run: go run ./tools/genfixture -layout /tmp/kh3-fixture
+
+      - name: build the image
+        run: docker build --build-arg VERSION=ci -t kh3save:ci .
+
+      - name: drive it end to end
+        env:
+          KH3_FIXTURE: /tmp/kh3-fixture
+        run: tools/docker-smoke.sh kh3save:ci
+
+      # The dev image is the toolchain, not the product, so it gets a sanity
+      # check rather than a second copy of the test matrix: it has to build,
+      # and it has to be able to compile this repo and run the codegen check
+      # that `make ci` ends on.
+      - name: build the dev image
+        run: docker build -f Dockerfile.dev -t kh3save-dev:ci .
+
+      - name: check the dev toolchain
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/src" kh3save-dev:ci \
+            make lint build tables-check
+
+  browser:
+    name: browser assets
+    # The page's JavaScript is about twenty-three hundred lines that no Go test
+    # reaches. Two checks cover it, and both need node: tools/jscheck runs the
+    # validator, the form builder, the code editor and the dashboard outside a
+    # browser against the real schema and a dump of the fixture, and tsc reads
+    # the same files where they sit and finds the undefined name a run might
+    # not reach. Both skip silently when node is absent, which is right for a
+    # contributor's machine and wrong here, so node is pinned rather than left
+    # to whatever the runner image happens to ship.
+    #
+    # Nothing installed here is served or shipped. The UI is still plain ES
+    # modules with no build step and the binary embeds the assets as written.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: '24'
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7
+        with:
+          go-version: '1.26'
+          cache: false
+
+      - name: install the one devDependency
+        working-directory: tools/jscheck
+        run: npm ci --no-fund --no-audit
+
+      - name: type-check the assets
+        working-directory: tools/jscheck
+        run: ./node_modules/.bin/tsc -p tsconfig.json
+
+      # Fails rather than skips: node is present, so the harness must have run.
+      - name: run the browser-side checks
+        run: |
+          go test ./internal/gui -run TestBrowserLogicHoldsUp -count=1 -v \
+            | tee out.txt
+          grep -q "all good" out.txt
+
+  generated:
+    name: generated files are current
+    # tables.go is generated from KHSave.Lib3; the web UI artwork is generated
+    # by tools/gen_emblem.py. Hand-edit either and the source of truth and the
+    # committed file silently drift apart.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7
+        with:
+          go-version: '1.26'
+          cache: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.12'
+      - name: regenerate and diff
+        run: |
+          python tools/gen_tables.py --check
+          python tools/gen_emblem.py --check

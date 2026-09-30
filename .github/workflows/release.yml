@@ -1,0 +1,119 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'version to build (e.g. v0.1.0)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    # Never cut a release the golden vectors have not passed. They are the
+    # frozen output of an independent implementation of this format, so a
+    # change that alters any byte of a written save fails here.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7
+        with: { go-version: '1.26', cache: false }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with: { python-version: '3.12' }
+      - run: go test ./... -count=1
+
+  build:
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7
+        with: { go-version: '1.26', cache: false }
+
+      - name: resolve version
+        id: v
+        run: echo "version=${{ github.event.inputs.version || github.ref_name }}" >> "$GITHUB_OUTPUT"
+
+      - name: cross-compile
+        env:
+          VERSION: ${{ steps.v.outputs.version }}
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          # CGO_ENABLED=0 keeps every binary static and self-contained, which
+          # is the whole point: one file, no runtime to install.
+          for target in \
+            windows/amd64 windows/arm64 \
+            darwin/amd64 darwin/arm64 \
+            linux/amd64 linux/arm64; do
+            os="${target%/*}"; arch="${target#*/}"
+            ext=""; [ "$os" = windows ] && ext=".exe"
+            out="dist/kh3save-${VERSION}-${os}-${arch}${ext}"
+            CGO_ENABLED=0 GOOS="$os" GOARCH="$arch" go build \
+              -trimpath -ldflags "-s -w -X main.version=${VERSION}" \
+              -o "$out" ./cmd/kh3save
+            echo "built $(basename "$out")"
+          done
+
+      - name: checksums
+        working-directory: dist
+        run: |
+          sha256sum * > SHA256SUMS
+          cat SHA256SUMS
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: binaries
+          path: dist/
+
+      - name: release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3
+        with:
+          files: dist/*
+          body: |
+            ## Asistente Epic → Steam
+
+            Descarga el archivo para tu sistema y extrae el ejecutable. Para
+            iniciar el asistente de migración, ejecuta `kh3save transfer`.
+            En Windows también puedes usar `Iniciar transferencia.bat` si el
+            archivo `.exe` está en la misma carpeta. Mantén abierta la consola
+            mientras usas el navegador. El comando sin argumentos abre la
+            interfaz general del editor upstream, no este asistente.
+
+            | Sistema | Archivo |
+            |---|---|
+            | Windows | `kh3save-${{ steps.v.outputs.version }}-windows-amd64.exe` |
+            | Windows ARM64 | `kh3save-${{ steps.v.outputs.version }}-windows-arm64.exe` |
+            | macOS (Apple silicon) | `kh3save-${{ steps.v.outputs.version }}-darwin-arm64` |
+            | macOS (Intel) | `kh3save-${{ steps.v.outputs.version }}-darwin-amd64` |
+            | Linux | `kh3save-${{ steps.v.outputs.version }}-linux-amd64` |
+
+            En macOS y Linux puedes seleccionar archivos desde el navegador y
+            escribir manualmente las rutas de origen y destino; el selector
+            nativo de carpetas integrado está disponible en Windows.
+
+            ### Privacidad y comprobaciones
+
+            La interfaz escucha solo en `127.0.0.1`; los archivos seleccionados
+            se envían al proceso local por loopback y se mantienen en memoria
+            durante la preparación. No publiques un túnel o puerto hacia
+            internet. La validación del archivo no garantiza que el juego
+            acepte la partida ni que Steam otorgue logros. Consulta
+            `TRANSFERENCIA.md` y `docs/PRIVACIDAD.md` antes de usarla.
+
+            ### Windows puede mostrar una advertencia
+
+            Los binarios no están firmados digitalmente. Verifica el SHA-256
+            con `SHA256SUMS` antes de ejecutarlos.
+
+            ### macOS puede mostrar una advertencia
+
+            La primera vez, abre el archivo desde el menú contextual y elige
+            **Abrir** si Gatekeeper lo solicita. Comprueba las instrucciones
+            completas y la licencia GPL-3.0 en el código fuente de esta Release.
+          generate_release_notes: true

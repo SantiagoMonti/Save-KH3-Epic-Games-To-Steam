@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>KH III · Epic a Steam</title>
+  <link rel="stylesheet" href="/style.css?t={{TOKEN}}">
+  <script defer src="/app.js?t={{TOKEN}}"></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#"><span class="brandmark">KH</span><span>Save Bridge<small>KINGDOM HEARTS III + Re Mind</small></span></a><span class="local"><i></i> Solo en esta computadora</span></header>
+  <main>
+    <section class="intro"><div class="eyebrow">ASISTENTE DE MIGRACIÓN</div><h1>De Epic Games Store a Steam</h1><p>Prepara una copia compatible de tus guardados de KH III. Los archivos se procesan localmente: esta herramienta no los envía a internet.</p></section>
+    <nav class="steps" aria-label="Pasos"><div class="step active" data-step="1"><b>1</b><span>Guardados de Epic</span></div><div class="step" data-step="2"><b>2</b><span>Destino de Steam</span></div><div class="step" data-step="3"><b>3</b><span>Revisar y convertir</span></div><div class="step" data-step="4"><b>4</b><span>Resultado</span></div></nav>
+    <div id="message" class="message" hidden role="alert"></div>
+    <section class="card" id="source-card"><div class="card-heading"><span class="number">01</span><div><h2>Elige los guardados de Epic</h2><p>Selecciona varios archivos desde el explorador o busca la carpeta de Epic automáticamente.</p></div></div>
+      <div id="epic-detected" class="detected" hidden></div>
+      <input id="source-files" type="file" accept=".bin" multiple hidden>
+      <div class="drop-zone" id="drop-zone"><div class="file-symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14.5v3A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5v-3"/></svg></div><div class="drop-copy"><strong>Arrastra aquí tus archivos de guardado</strong><span>o selecciónalos desde tu computadora</span></div><button class="file-select" id="pick-files" type="button">Abrir explorador de archivos</button></div>
+      <div id="selected-files" class="selected-files" hidden></div>
+      <div class="or-divider"><span>o elegir una carpeta de guardado</span></div>
+      <label for="source">Carpeta de origen</label><div class="path-row"><input id="source" autocomplete="off" placeholder="SaveGames\kh3sv2\data"><button class="secondary" id="pick-source" type="button">Elegir carpeta</button></div>
+      <p class="hint">Puedes seleccionar varios <code>KHIII_slot*.bin</code> y <code>KHIII_system.bin</code>. También puedes elegir la carpeta <code>data</code> o una carpeta superior. Los archivos se cargan en la memoria del asistente local para validarlos; no se envían a internet.</p>
+    </section>
+    <section class="card" id="destination-card"><div class="card-heading"><span class="number">02</span><div><h2>Elige el destino de Steam</h2><p>Selecciona la carpeta <code>data</code> o la carpeta de cuenta de Steam.</p></div></div>
+      <label for="destination">Carpeta de destino</label><div class="path-row"><input id="destination" autocomplete="off" placeholder="Steam\&lt;SteamID64&gt;\SaveGames\kh3sv2\data"><button class="secondary" id="pick-destination" type="button">Elegir carpeta</button></div>
+      <div class="id-row"><div><label for="account">SteamID64 <span id="detected-label" class="auto-label" hidden>detectado desde la carpeta</span></label><p class="hint">Es el número de 17 dígitos en <code>Steam\&lt;SteamID64&gt;</code>. No uses el <code>accountid</code> del archivo VDF.</p></div><input id="account" inputmode="numeric" maxlength="17" autocomplete="off" placeholder="7656119XXXXXXXXXX"></div>
+    </section>
+    <section class="card review-card" id="review-card"><div class="card-heading"><span class="number">03</span><div><h2>Revisa antes de convertir</h2><p>Validamos cada archivo y mostramos exactamente qué se creará o reemplazará.</p></div></div>
+      <button class="primary" id="review" type="button">Revisar archivos y destino <span>→</span></button>
+      <div id="review-result" hidden></div>
+    </section>
+    <section class="card result-card" id="result-card" hidden><div class="card-heading"><span class="number success">04</span><div><h2>Preparación verificada</h2><p>Todos los archivos convertidos se releyeron como guardados de Steam. Aún no se instalaron.</p></div></div>
+      <div id="prepared-summary"></div>
+      <label class="confirm-line"><input id="confirm-install" type="checkbox"><span>Confirmo instalar estos archivos en la carpeta de Steam indicada.</span></label>
+      <button class="primary" id="install" type="button" disabled>Instalar guardados en Steam <span>→</span></button>
+    </section>
+    <section class="card done-card" id="done-card" hidden><div class="done-icon">✓</div><div><h2>La conversión terminó</h2><p id="done-text"></p><div class="next-note"><b>Comprobación en el juego</b><br>Cierra esta herramienta, desactiva temporalmente Steam Cloud para KH III, inicia el juego y comprueba manualmente que aparecen los espacios transferidos. El formato validado no garantiza que el juego los acepte ni otorga logros por el progreso transferido.</div></div></section>
+    <aside class="notice"><b>Antes de empezar</b><ul><li>Cierra KINGDOM HEARTS III y desactiva Steam Cloud temporalmente para evitar que restaure archivos anteriores.</li><li>Se respaldarán los originales de Epic y cualquier archivo de Steam que se reemplace, dentro de una carpeta visible llamada <code>Copias de seguridad</code>.</li><li>Los respaldos no están ocultos. Epic nunca se modifica.</li></ul></aside>
+    <footer>Conversión basada en <a href="https://github.com/thirteenth-order/kh3-save-editor" target="_blank" rel="noreferrer">kh3-save-editor</a> · GPL-3.0 · Ejecución local</footer>
+  </main>
+</body>
+</html>

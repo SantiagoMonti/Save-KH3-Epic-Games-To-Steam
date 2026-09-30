@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="330" viewBox="0 0 1440 330" role="img" aria-labelledby="title desc">
+  <title id="title">Cuatro pasos para transferir los guardados</title>
+  <desc id="desc">Elegir los archivos de Epic, elegir el destino Steam, revisar y convertir, y comprobar el resultado y los respaldos.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#121b29"/><stop offset="1" stop-color="#201e38"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4a76d"/><stop offset="1" stop-color="#e77988"/></linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#adbdff"/><stop offset="1" stop-color="#7b89e5"/></linearGradient>
+  </defs>
+  <rect width="1440" height="330" rx="28" fill="url(#bg)"/>
+  <g font-family="Inter,Segoe UI,Arial,sans-serif">
+    <text x="56" y="54" fill="#aeb9cf" font-size="13" font-weight="700" letter-spacing="2.5">TRANSFERENCIA GUIADA</text>
+    <path d="M188 162H1248" stroke="#5b6176" stroke-width="2" stroke-dasharray="7 10"/>
+    <g transform="translate(70 93)">
+      <rect width="290" height="170" rx="19" fill="#ffffff" fill-opacity=".045" stroke="#ffffff" stroke-opacity=".12"/>
+      <circle cx="39" cy="39" r="20" fill="#f0a36d" fill-opacity=".18"/><text x="39" y="45" text-anchor="middle" fill="#ffd3b3" font-size="16" font-weight="700">01</text>
+      <rect x="23" y="84" width="34" height="30" rx="5" fill="none" stroke="#f3ad7d" stroke-width="2.5"/><path d="M23 93h12l5-6h9a4 4 0 0 1 4 4v16a5 5 0 0 1-5 5H28a5 5 0 0 1-5-5z" fill="#f3ad7d" fill-opacity=".13" stroke="#f3ad7d" stroke-width="2"/>
+      <text x="75" y="101" fill="#f7f7fb" font-size="20" font-weight="700">Elige los archivos</text><text x="75" y="128" fill="#f0b17f" font-size="15">Origen: Epic Games Store</text>
+      <text x="24" y="151" fill="#aeb9ca" font-size="13">Se validan antes de continuar.</text>
+    </g>
+    <g transform="translate(420 93)">
+      <rect width="290" height="170" rx="19" fill="#ffffff" fill-opacity=".045" stroke="#ffffff" stroke-opacity=".12"/>
+      <circle cx="39" cy="39" r="20" fill="#909ffa" fill-opacity=".2"/><text x="39" y="45" text-anchor="middle" fill="#d4dbff" font-size="16" font-weight="700">02</text>
+      <circle cx="40" cy="99" r="18" fill="none" stroke="#aabaff" stroke-width="2.5"/><path d="M25 98h10l5-7 9 16 5-9h6" fill="none" stroke="#aabaff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="75" y="101" fill="#f7f7fb" font-size="20" font-weight="700">Elige el destino</text><text x="75" y="128" fill="#b8c4ff" font-size="15">Carpeta de Steam</text>
+      <text x="24" y="151" fill="#aeb9ca" font-size="13">Detecta o valida el SteamID64.</text>
+    </g>
+    <g transform="translate(770 93)">
+      <rect width="290" height="170" rx="19" fill="#ffffff" fill-opacity=".045" stroke="#ffffff" stroke-opacity=".12"/>
+      <circle cx="39" cy="39" r="20" fill="#80d7c0" fill-opacity=".16"/><text x="39" y="45" text-anchor="middle" fill="#a9f0d9" font-size="16" font-weight="700">03</text>
+      <path d="M28 84h26v30H28zM33 91h16m-16 6h16m-16 6h11" fill="none" stroke="#96e5cf" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="75" y="101" fill="#f7f7fb" font-size="20" font-weight="700">Revisa y convierte</text><text x="75" y="128" fill="#a9e8d5" font-size="15">Confirma cada reemplazo</text>
+      <text x="24" y="151" fill="#aeb9ca" font-size="13">Salida temporal y comprobación.</text>
+    </g>
+    <g transform="translate(1120 93)">
+      <rect width="250" height="170" rx="19" fill="#ffffff" fill-opacity=".045" stroke="#ffffff" stroke-opacity=".12"/>
+      <circle cx="39" cy="39" r="20" fill="#f1cb86" fill-opacity=".18"/><text x="39" y="45" text-anchor="middle" fill="#ffe4a9" font-size="16" font-weight="700">04</text>
+      <path d="m29 100 8 8 17-20" fill="none" stroke="#f3d48f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="41" cy="99" r="18" fill="none" stroke="#f3d48f" stroke-width="2.5"/>
+      <text x="75" y="101" fill="#f7f7fb" font-size="20" font-weight="700">Comprueba</text><text x="75" y="128" fill="#ffdfa0" font-size="15">Juego y copias</text>
+      <text x="24" y="151" fill="#aeb9ca" font-size="13">Verifica la partida dentro del juego.</text>
+    </g>
+  </g>
+</svg>
