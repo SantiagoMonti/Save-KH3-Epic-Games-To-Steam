@@ -8,7 +8,7 @@ el contenedor de Steam, el rekey por cuenta y las comprobaciones CRC32/MD5.
 Este asistente agrega el flujo de migración y no vuelve a implementar el
 formato ni la clave. Se conservan `LICENSE` y `NOTICE.md` del proyecto GPL-3.0.
 
-## Iniciar
+## Iniciar ###
 
 1. Cierra KINGDOM HEARTS III.
 2. Haz doble clic en **Iniciar transferencia.bat**. Se abrirá la interfaz en el
